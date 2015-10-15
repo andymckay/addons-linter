@@ -26,6 +26,7 @@ export default class JavaScriptScanner {
       // ESLint is synchronous and doesn't accept streams, so we need to
       // pass it the entire source file as a string.
       let eslint = new _ESLint.CLIEngine({
+        allowInlineConfig: false,
         ignore: false,
         rulePaths: [rulesPath],
         rules: ESLintRules,
