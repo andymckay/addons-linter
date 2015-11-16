@@ -144,6 +144,18 @@ describe('JavaScript Scanner', function() {
       });
   });
 
+  it('ignores // eslint-disable-line comments', () => {
+    var code = singleLineString`var myDatabase = indexeddb || mozIndexedDB;
+                                // eslint-disable-line`;
+    var jsScanner = new JavaScriptScanner(code, 'badcode.js');
+
+    return jsScanner.scan()
+      .then((validationMessages) => {
+        assert.equal(validationMessages.length, 1);
+        assert.equal(validationMessages[0].code, messages.MOZINDEXEDDB.code);
+      });
+  });
+
   it('should export all rules in rules/javascript', () => {
     // We skip the "run" check here for now as that's handled by ESLint.
     var ruleFiles = getRuleFiles('javascript');
